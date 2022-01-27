@@ -1,1 +1,1 @@
-Record the learning Data Structure.
+Record the learning process of Data Structure.
