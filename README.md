@@ -1,1 +1,2 @@
-Record the learning process of Data Structure.
+以章节的形式记录自己学习数据结构的过程：
+[第一章 绪论——什么是算法](Chapter01.md)
