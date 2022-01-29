@@ -12,7 +12,7 @@ int main()
     return 0;
 }
 
-int gs_DC(int A[], int lo, int hi)
+int gs_DC(int A[], int lo, int hi)  //TODO Learn the DC method
 {
     if (hi - lo < 2)
         return A[lo];
