@@ -13,7 +13,7 @@ int main()
     {
         sum += X;
     }
-    cout << sum << endl;
+    cout << sum << endl; //FIXME complete the function of subset
     return 0;
 
 }
