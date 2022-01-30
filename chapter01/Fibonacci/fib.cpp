@@ -1,5 +1,6 @@
 #include <iostream>
 long long fib_R(int n);
+// 算法导论 15.1-5
 long long fib_M(int n, long long M[]);         // 记忆递归
 long long fib_D(int n);         // 动态规划
 int main()
