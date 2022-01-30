@@ -1,2 +1,2 @@
 Fibonacci:
-	g++ fib_R.cpp -o fib_R
+	g++ fib.cpp -o fib
