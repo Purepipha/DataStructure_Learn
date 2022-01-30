@@ -10,8 +10,9 @@ int main()
     cin >> n;
     long long * M = new long long[n + 1];
     for (int i = 0; i < n; i++)
-        cout << i << ": " << fib_R(i) << "\t"
-             << fib_M(i, M) << "\t" << fib_D(i)<< endl;
+        cout << i << ": " << fib_D(i) << flush << "\t"
+             << fib_M(i, M) << flush<< "\t"
+             << fib_R(i) << endl;
     return 0;
 }
 long long fib_R(int n)
