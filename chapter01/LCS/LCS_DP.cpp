@@ -4,9 +4,9 @@ int LCS_DP(char A[], int m, char B[], int n);
 int main()
 {
     using namespace std;
-    char cha[12] = "EDUCATIONAL";
-    char chb[10] = "ADVANTAGE";
-    int length = LCS_DP(cha, 10, chb, 8);
+    char cha[12] = "10010101";
+    char chb[10] = "010110110";
+    int length = LCS_DP(cha, 8, chb, 9);   // [0,m+1]和[0,n+1]
     cout << length << endl;
     return 0;
 }

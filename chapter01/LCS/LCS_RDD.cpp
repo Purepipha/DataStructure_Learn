@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 // 求A[0,m]与B[0,n]的最大公共子序列长度
-void LCS_RDD(char A[],int m, char B[], int n, int &length);
+void LCS_RDD(char A[],int m, char B[], int n, int &length);  // [0,m]和[0,n]
 // int LCS_RDD(char A[], int m, char B[], int n);
 
 int main()
