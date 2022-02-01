@@ -16,6 +16,7 @@
         "functional": "cpp",
         "tuple": "cpp",
         "random": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "iostream": "cpp"
     }
 }

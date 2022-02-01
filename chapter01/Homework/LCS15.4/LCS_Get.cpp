@@ -3,27 +3,38 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <ctime>
 using std::string;
-int LCS_Get(string A, string B, string *C);  // 普通递归法，无法存储返回结果
-int memo_LCS_Get(string A, string B, int dp[]); // 自上向下记忆递归法
+int LCS_Get(string A, string B);  // 普通递归法，无法存储返回结果
+int memo_LCS_Get(string A, string B, int dp[]); // 自上向下记忆递归法 Memoization
+// FIXME修复下面的程序，运行结果不同
 int bottom_up_LCS_Get(string A, string B, string * C);  // DP 自底向上法 15.4_1 and 15.4-2
 
 int main()
 {
     using namespace std;
+    clock_t start, end;
     string nums1 = "10010101";
     string nums2 = "010110110";
     string nums;
     int dp[(nums1.length()+1)*(nums2.length()+1)] = {0};    // 需要零初始化
+    start = clock();
+    int len_get = LCS_Get(nums1, nums2);
+    end = clock();
+    cout << "Recursion version time: " << double(end - start) / CLOCKS_PER_SEC << endl;
+    start = clock();
     int len_memo = memo_LCS_Get(nums1, nums2, dp);
+    end = clock();
+    cout << "Iterate version time: " << double(end - start) / CLOCKS_PER_SEC << endl;
+    cout << "Recursion length: " << len_get << endl;
+    cout << "Iterate length: " << len_memo << endl;
     int len = bottom_up_LCS_Get(nums1,nums2, &nums);
     cout << "Maximun length of LCS is " << len << endl;
     cout << "LCS: " << nums << endl;
-    cout << len_memo << endl;
     return 0;
 }
 
-int LCS_Get(string A, string B, string *C)
+int LCS_Get(string A, string B)
 {
     int lenA = A.length();
     int lenB = B.length();
@@ -31,10 +42,9 @@ int LCS_Get(string A, string B, string *C)
         return 0;
     if (A[lenA-1] == B[lenB-1])
     {
-        C->push_back(A[lenA-1]);
         A.pop_back();
         B.pop_back();
-        return LCS_Get(A,B,C) + 1;
+        return LCS_Get(A,B) + 1;
     }
     else
     {
@@ -42,7 +52,7 @@ int LCS_Get(string A, string B, string *C)
         string B1 = B;
         A1.pop_back();
         B1.pop_back();
-        return std::max<int>(LCS_Get(A1,B,C),LCS_Get(A,B1,C));
+        return std::max<int>(LCS_Get(A1,B),LCS_Get(A,B1));
     }
 }
 
