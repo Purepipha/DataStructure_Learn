@@ -40,7 +40,7 @@ traverse()|遍历响亮并同意处理所有元素|向量
 - [STL VECTOR样例程序](course/vector_example.cpp)
 ### 2.1.3 模板类
 ![模板类的基本组成](assets/mk2022-02-02-20-24-18.png)
-// TODO fcitx词库配置
+- [构造+析构：重载程序](course/Vector/Vector.h)
 ## 2.2 可扩充向量
 ## 2.3 无序向量
 ## 2.4 有序向量
