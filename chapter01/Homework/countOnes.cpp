@@ -48,8 +48,8 @@ int countOnes2( unsigned int n)
     n = ROUND(n, 0); // 以02位为单位分组，各组内前01位与后01位累加，得到原先这02位中1的数目
     n = ROUND(n, 1); // 以04为为单位分组，各组内前02位与后02位累加，得到原先这04位中1的数目
     n = ROUND(n, 2); // 以08为为单位分组，各组内前04位与后04位累加，得到原先这08位中1的数目
-    n = ROUND(n, 4); // 以16为为单位分组，各组内前08位与后08位累加，得到原先这16位中1的数目
-    // n = ROUND(n, 5); // 以32为为单位分组，各组内前16位与后16位累加，得到原先这32位中1的数目
+    n = ROUND(n, 3); // 以16为为单位分组，各组内前08位与后08位累加，得到原先这16位中1的数目
+    n = ROUND(n, 4); // 以32为为单位分组，各组内前16位与后16位累加，得到原先这32位中1的数目
     return n;
 } // 32位字长时，O(log2_(32)) = O(5) = O(1)
 int main()
@@ -60,7 +60,7 @@ int main()
     cin >> num;
     int ones = countOnes2(num);
     cout << num << " bit has "<< ones << " 1." << endl;
-    // cout << sizeof(int) << endl;
+    cout << sizeof(unsigned int) << endl;
     // for (int i = 0; i < 5; i++)
     //     cout << "// MASK(" << i << ") = " << hex << MASK(i) << "(h)"
     //         << " = " << bitset<32>(MASK(i)) << "(b)" << endl;
