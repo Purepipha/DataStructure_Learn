@@ -1,6 +1,6 @@
 // max.cpp -- get max value in A[]
 // 习题1-15
-#include <iostream>算法
+#include <iostream>
 int maxI(int A[], int n)
 { //求数组最大值算法(迭代版)
     int max = INT16_MIN; //O(1):初始化最大值
@@ -17,3 +17,22 @@ int maxR(int A[], int n)
     //     return A[0];
     // return maxR(A, n - 1) > A[n] ? maxR(A, n - 1) : A[n];
 } //O(1) * 递归深度 = O(1) * (n + 1) = O(n)
+int maxR1(int A[], int lo, int hi)
+{
+    if (lo + 1 ==hi)
+        return A[lo];
+    else
+    {
+        int mi = (hi + lo) >> 1;
+        return maxR1(A, lo, mi) > maxR1(A, mi, hi) ? maxR1(A, lo, mi) : maxR1(A, mi, hi);
+    }
+}
+
+int main()
+{
+    using namespace std;
+    int arr[5] = {1, 6, 9, 5, 4};
+    int max = maxR1(arr, 0, 5);
+    cout << max << endl;
+    return 0;
+}
