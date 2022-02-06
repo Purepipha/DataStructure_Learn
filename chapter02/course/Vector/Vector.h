@@ -1,5 +1,5 @@
 #pragma once
-// Vector source code
+    // Vector source code
 #define DEFAULT_CAPACITY 3  // 默认初始容量(实际应用中可设置为更大)
 using Rank = int;
 template <typename T>
@@ -75,7 +75,18 @@ void Vector<T>::expand()    // 向量空间不足时扩容
         _elem[i] = oldElem[i];      // T为基本类型或已重载运算符"="
     delete []oldElem;   // 释放原空间
 }   // 得益于向量的封装，扩容之后数据区的物理地址有所改变，却不致出现野指针
-
+// 缩容算法
+template <typename T>
+void Vector<T>::shrink()
+{ // 装填因子过小时压缩向量所占空间
+    if (_capacity < DEFAULT_CAPACITY << 1) return; //不致收缩到DEFAULT_CAPACITY以下
+    if (_size << 2 > _capacity) return; // 以25%为界
+    T * oldElem = _elem;
+    _elem = new T[_capacity >>= 1]; // 容量减小一半
+    for (int i = 0; i < _size; i++) // 复制原向量内容
+        _elem[i] = oldElem[i];
+    delete [] oldElem; // 释放原空间
+}
 // 二分查找算法
 template <typename T>
 static Rank binSearch(T * A, T const & e, Rank lo, Rank hi)
