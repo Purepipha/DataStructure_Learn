@@ -54,7 +54,7 @@ traverse()|遍历响亮并同意处理所有元素|向量
   - 一般应用环境，难以准确 **预测**空间的需求量
 - 动态空间管理
   - 在即将上溢时，**适当扩大**内部数组的容量
-  - [扩容算法](course/Vector/Vector.h)
+  - [扩容算法](course/Vector/vector_expand.h)
 ### 2.2.2 分摊
 - 容量递增策略
   - 追加固定容量： _elem = new_T[_capacity += INCREMENT];
@@ -89,14 +89,14 @@ traverse()|遍历响亮并同意处理所有元素|向量
 
 ## 2.3 无序向量
 ### 2.3.1 基本操作
-- [元素访问](course/Vector/Vector.h)
+- [元素访问](course/Vector/vector_bracket.h)
   - V.get(r)和V.put(r,2)不够便捷、直观。通过 **重载** 下标操作符"[]"实现
   - 重载运算符的返回值为引用，这样可以实现元素赋值操作
   - 这里采用了简易的方式处理意外和错误(入口参数约定：0 <= r < _size)
   - 实际应用中，应采用更为严格的方式
-- [插入操作](course/Vector/Vector.h)
-- [区间删除](course/Vector/Vector.h)
-- [单元素删除](course/Vector/Vector.h)
+- [插入操作](course/Vector/vector_insert.h)
+- [区间删除](course/Vector/vector_removeInterval.h)
+- [单元素删除](course/Vector/vector_remove.h)
   - 将 **单元素** 视作 **区间** 的特例
   - 但不能反过来，通过反复调用remove(r)来实现remove(lo,hi):
     - 每次循环耗时 n-hi = O(n);
@@ -105,10 +105,10 @@ traverse()|遍历响亮并同意处理所有元素|向量
 ### 2.3.2 查找
 - 对于无序向量，只需要判等器
 - 对于有序向量，需要比较器
-- [顺序查找](course/Vector/Vector.h)
+- [顺序查找](course/Vector/vector_find.h)
   - 输入敏感(input-sensitive):最好O(1)，最差O(n)
 ### 2.3.3 去重
-- [去重](course/Vector/Vector.h)
+- [去重](course/Vector/vector_deduplicate.h)
   - 可以从不变性和单调性证明算法的正确性
     - 不变性：[0,i)内没有重复元素
     - 单调性：i增大，直至_size，问题规模不断缩小
@@ -135,7 +135,7 @@ traverse()|遍历响亮并同意处理所有元素|向量
   - 无序向量经 **预处理** 转换为有序向量之后，算法多可优化。
 - 去重算法
   - 若采用无序向量的去重算法，会相当低效(O(n^2))。
-  - [高效去重法uniquify()](course/Vector/Vector.h)
+  - [高效去重法uniquify()](course/Vector/vector_uniquify.h)
 ### 2.4.2 二分查找(版本A)
 - 统一接口
   - 对于特殊情况的处理：
@@ -149,7 +149,7 @@ traverse()|遍历响亮并同意处理所有元素|向量
   - x < e:则e必在轴点右侧字却见，故递归右侧子区间
   - e = x：在此处命中，可随即返回 // 若有多个，返回何者
   将轴点mi取做中点，则至多经过两次比较，要么命中，要么将问题规模缩减一半
-- 实现 [binSearch()](course/binSearch.cpp)
+- 实现 [binSearch()](course/Vector/vector_search_binary_A.h)
 - 查找长度
   - 如何更精确的评估查找算法的性能？考察关键码的比较次数
   - 通常，需分别针对 **成功** 与 **失败**查找，从 **最好、最坏、平均** 等角度评估
@@ -162,15 +162,15 @@ traverse()|遍历响亮并同意处理所有元素|向量
   - 通过对 **递归深度** 的不均衡对 **转向成本** 的不均衡做 **补偿**， 平均查找深度能进一步缩短
   - 若有 n = fib(k) - 1，则可取mi = fib(k-1) - 1
     于是，前后子向量的长度分别为 fib(k-1) - 1和fib(k-2) - 1
-- 实现 [fibSearch()](course/fibSearch.cpp)
+- 实现 [fibSearch()](course/Vector/vector_search_fibonaccian_A.h)
 - 平均查找长度增长趋势为O(1.44 log_2(n))
 ### 2.4.4 二分查找(版本B)
 - 从三分支到两分支
   即无论朝哪个方向发展，都做一次比较。
-- 实现 [二分查找版本B](course/binSearch2.cpp)
+- 实现 [二分查找版本B](course/Vector/vector_search_binary_B.h)
 - 性能：该算法的渐进复杂度O(logn)不受任何影响
 ### 2.4.5 二分查找(版本C)
-- 实现 [二分查找版本C](course/binSearch3.cpp)
+- 实现 [二分查找版本C](course/Vector/vector_search_binary_C.h)
 - 性能与版本A和版本B相比，没有变化
 - 版本C可以对特殊情况的约定，即存在多个元素时，返回秩最大者；不存在元素时，返回失败的位置
 ## 2.5 排序与下界
@@ -225,7 +225,7 @@ traverse()|遍历响亮并同意处理所有元素|向量
 ### 2.6.1 统一入口
 排序操作应该纳入向量基本接口的范围。
 ### 2.6.2 起泡排序
-- [起泡排序实现](course/Vector/Vector.h)
+- [起泡排序实现](course/Vector/vector_bubblesort_A.h)
 - [扫描交换实现](course/Vector/Vector.h)
 - 重复元素与稳定性
   稳定性是一个更细致的要求，即要求对重复元素，排序算法不改变重复元素的相对顺序。上述起泡算法仍可改进。
@@ -236,8 +236,8 @@ traverse()|遍历响亮并同意处理所有元素|向量
 - 有序向量的二路归并
   归并排序可以理解为通过反复调用所谓二路归并(2-way merge)的算法实现的。二路归并属于**迭代式算法**，每步迭代的过程中，只需要比较两个待归并向量的**首元素**，将最小者取出并追加到**输出向量的结尾**，该元素在原向量中的后继成为新的首元素。直至**某一向量为空**，最后将另一非空向量**整体接至**输出向量的末尾。
 - 分治策略
-  归并排序的主体结构属于典型的分治策略:[归并排序代码](course/Vector/Vector.h)
-- 二路归并接口的实现 [二路归并算法](course/Vector/Vector.h)
+  归并排序的主体结构属于典型的分治策略:[归并排序代码](course/Vector/vector_mergeSort.h)
+- 二路归并接口的实现 [二路归并算法](course/Vector/vector_merge.h)
 - 归并时间
   归并算法merge()的渐进时间成本，取决于循环迭代的总次数，即时间复杂度为O(n),且该算法在最好情况下也为O(n)，即其时间复杂度为 $\Theta(n)$ 。二路归并的算法可在严格少于 $\Omega(nlogn)$的时间内完成排序的这一事实，与此前的排序算法下界的结论并不矛盾——这里的**输入并非一组完全随机的元素**
 - 推广
