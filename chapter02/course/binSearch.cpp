@@ -1,6 +1,4 @@
-// binSearch.cpp -- 二分查找模板
-// versionA
-#include "Vector/Vector.h"
+//二分查找算法(版本A)：在有序向量的区间[lo,hi)内查找元素e，0<=lo<=hi<_size
 template <typename T>   // 在有序向量区间[lo, hi)查找元素e
 static Rank binSearch(T * S, T const & e, Rank lo, Rank hi)
 {
