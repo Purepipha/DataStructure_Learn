@@ -1,5 +1,5 @@
 template <typename T> void Vector<T>::sort(Rank lo, Rank hi){//向量区间[lo,hi)排序
-switch(3){//rank() % 6
+switch(rank() % 6){
     case 1: bubbleSort(lo,hi);break;//起泡排序
     case 2: selectionSort(lo,hi);break;//选择排序(习题)
     case 3: mergeSort(lo,hi);break;//归并排序
