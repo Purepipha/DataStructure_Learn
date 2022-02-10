@@ -1,16 +1,16 @@
 #pragma once
 // Vector definition
 #include <iostream>
-#define DEFAULT_CAPACITY 3  // 默认初始容量(实际应用中可设置为更大)
+#define DEFAULT_CAPACITY 3  //默认初始容量(实际应用中可设置为更大)
 using Rank = int;
-#define MERGE_CAPACITY 1000
+#define MERGE_CAPACITY 1000//vector
 template <typename T>
 class Vector{// 向量模板类
 protected:
     Rank _size; //规模
     int _capacity; //容量
     T * _elem; //数据区
-    T * B = new T[MERGE_CAPACITY];
+    T * B = new T[MERGE_CAPACITY]; //megre_imporve needed
     void copyFrom(T const * A, Rank lo, Rank hi); //复制数组区间A[lo,hi)
     void expand(); //空间不足时扩容
     void shrink(); //装填因子过小时压缩
@@ -58,12 +58,16 @@ public:
     void unsort(Rank lo, Rank hi);//对[lo,hi)置乱
     int deduplicate();//无序去重
     int uniquify();//有序去重
+// test needed
     void mergesort_improve(Rank lo, Rank hi);
+    void merge_slow(Rank lo, Rank mi, Rank hi);
+    void mergesort(Rank lo, Rank hi);
 // 遍历
     void traverse(void(*) (T &));//遍历(使用函数指针，只读或者局部性修改)
     template<typename VST> void traverse(VST &);//遍历(使用函数对象，可全局性修改)
 };//Vector
 
+// test mergesort needed
 template <typename T>   //有序向量的归并
 void Vector<T>::merge_improve(Rank lo, Rank mi, Rank hi){//各自有序的子向量[lo,mi)和[mi,hi)
     T * A = _elem + lo; //合并后的向量A[0,ho-lo) = _elem[lo, hi)
@@ -93,4 +97,34 @@ void Vector<T>::mergesort_improve(Rank lo, Rank hi)
     mergesort_improve(lo,mi);
     mergesort_improve(mi,hi); // 分别排序
     merge_improve(lo, mi, hi); // 归并
+}
+
+template <typename T>   //有序向量的归并
+void Vector<T>::merge_slow(Rank lo, Rank mi, Rank hi){//各自有序的子向量[lo,mi)和[mi,hi)
+    T * A = _elem + lo; //合并后的向量A[0,ho-lo) = _elem[lo, hi)
+    Rank lb = mi - lo;
+    T * B = new T[lb]; //前子向量B[0,lb) = _elem[lo,mi)
+    for (Rank i = 0; i < lb;i++)// 复制前子向量
+    {B[i] = A[i];}
+    Rank lc = hi - mi;
+    T * C = _elem + mi; //后子向量C[0,lc) = _elem[mi,hi)
+    for (Rank i = 0, j = 0, k = 0;(j < lb) || (k < lc);)
+    { //B[j]和C[k]中的小者续至A末尾
+        if ((j < lb) && (!(k < lc) || (B[j] <= C[k])))
+            A[i++] = B[j++];
+        if ((k < lc) && (!(j < lb) || (B[j] > C[k])))
+            A[i++] = C[k++];
+    }
+    delete [] B;
+}
+
+template <typename T> // 向量归并排序
+void Vector<T>::mergesort(Rank lo, Rank hi)
+{ // 0 <= lo <= hi <= _size
+    if (hi - lo < 2) // 单元素区间自然有序，否则..
+        return;
+    Rank mi = (lo + hi) >> 1; // 以中点为界
+    mergesort(lo,mi);
+    mergesort(mi,hi); // 分别排序
+    merge_slow(lo, mi, hi); // 归并
 }

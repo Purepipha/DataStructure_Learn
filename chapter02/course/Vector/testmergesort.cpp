@@ -1,17 +1,15 @@
 #include "Vector.h"
-#include "vector_merge.h"
-#include "vector_mergeSort.h"
-#include "vector_sort.h"
 #include "vector_bracket.h"
 #include "vector_constructor_by_copying.h"
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
 
-int N = 10;
+int N = 100;
 int main()
 {
     using namespace std;
+    srand(time(0));
     int arr1[N];
     for (int i = 0; i < N; i++)
         arr1[i] = (rand() % N);
@@ -21,7 +19,7 @@ int main()
     Vector<int> vi(arr1, N);
     clock_t start, end;
     start = clock();
-    vi.sort(0, N);
+    vi.mergesort(0, N);
     end = clock();
     cout << double(end - start) / CLOCKS_PER_SEC << endl;
     for(int i = 0; i < N; i++)
