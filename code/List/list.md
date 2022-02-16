@@ -134,5 +134,7 @@ traverse()|遍历并统一处理所有节点，处理方法由函数对象指定
   [selectionSort()](list/list_selectionSort.h)
 
 ### 3.5.4 归并排序
-- 二路归并排序算法的实现
-
+- [二路归并排序算法的实现](list/list_merge.h)
+- 归并时间：O(n+m)
+- 分治策略：[mergeSort()](list/list_mergeSort.h)
+- 排序时间：O(nlogn)
