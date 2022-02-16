@@ -7,7 +7,7 @@ protected:
     void init();//列表创建时的初始化
     int clear();//清楚所有节点
     void copyNodes(Posi(T) p, int n);//复制自列表位置起的第n项
-    void merge(Posi(T) &, int, List<T>&, Posi(T), int);//归并
+    void merge(Posi(T) &, int, List<T>&, Posi(T) &, int);//归并
     void mergeSort(Posi(T) & p, int n);//对从p开始连续的n个节点归并排序
     void selectionSort(Posi(T) p, int n);//对从p开始连续的n个节点选择排序
     void insertionSort(Posi(T) p, int n);//对从p开始连续的n个节点插入排序
@@ -33,9 +33,9 @@ public:
     Posi(T) find(T const & e, int n, Posi(T) p) const;//无序区间查找
     Posi(T) search(T const & e) const//有序列表查找
     { return search(e, _size, trailer); }
-    Posi search(T const & e, int n, Posi(T) p) const;//有序区间查找
-    Posi selectMax(Posi(T), int n) const;//在p及其n-1个后继中选出最大者
-    Posi selectMax() { return selectMax(header->succ, _size);}//整体最大者
+    Posi(T) search(T const & e, int n, Posi(T) p) const;//有序区间查找
+    Posi(T) selectMax(Posi(T), int n) const;//在p及其n-1个后继中选出最大者
+    Posi(T) selectMax() { return selectMax(header->succ, _size);}//整体最大者
 //可写访问接口
     Posi(T) insertAsFirst(T const & e);//将e当作首节点插入
     Posi(T) insertAsLast(T const & e);//将e当作末节点插入
