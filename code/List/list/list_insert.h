@@ -1,4 +1,3 @@
-#include "list.h"
 template <typename T>
 Posi(T) List<T>::insertAsFirst(T const & e){
     _size++; return header->insertAsSucc(e);//e作为首节点插入

@@ -1,4 +1,3 @@
-#include "list.h"
 template <typename T>//从起始于位置p的n个元素选出最大者
 Posi(T) List<T>::selectMax(Posi(T) p, int n) const {
     Posi(T) max = p;//最大节点暂定为p
