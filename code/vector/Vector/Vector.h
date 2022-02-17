@@ -23,6 +23,7 @@ protected:
     void heapSort(Rank lo, Rank hi);    //堆排序(稍后结合完全堆讲解)
     Rank partition(Rank lo, Rank hi);   //轴点构造算法
     void quickSort(Rank lo, Rank hi);   //快速排序算法
+    void insertionSort(Rank lo, Rank hi);//插入排序算法
     void selectionSort(Rank lo, Rank hi);//选择排序算法
     void shellSort(Rank lo, Rank hi);   //希尔排序算法
 public:
@@ -59,72 +60,72 @@ public:
     int deduplicate();//无序去重
     int uniquify();//有序去重
 // test needed
-    void mergesort_improve(Rank lo, Rank hi);
-    void merge_slow(Rank lo, Rank mi, Rank hi);
-    void mergesort(Rank lo, Rank hi);
+    // void mergesort_improve(Rank lo, Rank hi);
+    // void merge_slow(Rank lo, Rank mi, Rank hi);
+    // void mergesort(Rank lo, Rank hi);
 // 遍历
     void traverse(void(*) (T &));//遍历(使用函数指针，只读或者局部性修改)
     template<typename VST> void traverse(VST &);//遍历(使用函数对象，可全局性修改)
 };//Vector
 
-// test mergesort needed
-template <typename T>   //有序向量的归并
-void Vector<T>::merge_improve(Rank lo, Rank mi, Rank hi){//各自有序的子向量[lo,mi)和[mi,hi)
-    T * A = _elem + lo; //合并后的向量A[0,ho-lo) = _elem[lo, hi)
-    Rank lb = mi - lo;
-    // T * B = new T[lb]; //前子向量B[0,lb) = _elem[lo,mi)
-    for (Rank i = 0; i < lb; i++){// 复制前子向量
-        B[i] = A[i];
-    }
-    Rank lc = hi - mi;
-    T * C = _elem + mi; //后子向量C[0,lc) = _elem[mi,hi)
-    for (Rank i = 0, j = 0, k = 0;(j < lb) || (k < lc);)
-    { //B[j]和C[k]中的小者续至A末尾
-        if ((j < lb) && (!(k < lc) || (B[j] <= C[k])))
-            A[i++] = B[j++];
-        if ((k < lc) && (!(j < lb) || (B[j] > C[k])))
-            A[i++] = C[k++];
-    }
-    // delete [] B;
-}
+// // test mergesort needed
+// template <typename T>   //有序向量的归并
+// void Vector<T>::merge_improve(Rank lo, Rank mi, Rank hi){//各自有序的子向量[lo,mi)和[mi,hi)
+//     T * A = _elem + lo; //合并后的向量A[0,ho-lo) = _elem[lo, hi)
+//     Rank lb = mi - lo;
+//     // T * B = new T[lb]; //前子向量B[0,lb) = _elem[lo,mi)
+//     for (Rank i = 0; i < lb; i++){// 复制前子向量
+//         B[i] = A[i];
+//     }
+//     Rank lc = hi - mi;
+//     T * C = _elem + mi; //后子向量C[0,lc) = _elem[mi,hi)
+//     for (Rank i = 0, j = 0, k = 0;(j < lb) || (k < lc);)
+//     { //B[j]和C[k]中的小者续至A末尾
+//         if ((j < lb) && (!(k < lc) || (B[j] <= C[k])))
+//             A[i++] = B[j++];
+//         if ((k < lc) && (!(j < lb) || (B[j] > C[k])))
+//             A[i++] = C[k++];
+//     }
+//     // delete [] B;
+// }
 
-template <typename T> // 向量归并排序
-void Vector<T>::mergesort_improve(Rank lo, Rank hi)
-{ // 0 <= lo <= hi <= _size
-    if (hi - lo < 2) // 单元素区间自然有序，否则..
-        return;
-    Rank mi = (lo + hi) >> 1; // 以中点为界
-    mergesort_improve(lo,mi);
-    mergesort_improve(mi,hi); // 分别排序
-    merge_improve(lo, mi, hi); // 归并
-}
+// template <typename T> // 向量归并排序
+// void Vector<T>::mergesort_improve(Rank lo, Rank hi)
+// { // 0 <= lo <= hi <= _size
+//     if (hi - lo < 2) // 单元素区间自然有序，否则..
+//         return;
+//     Rank mi = (lo + hi) >> 1; // 以中点为界
+//     mergesort_improve(lo,mi);
+//     mergesort_improve(mi,hi); // 分别排序
+//     merge_improve(lo, mi, hi); // 归并
+// }
 
-template <typename T>   //有序向量的归并
-void Vector<T>::merge_slow(Rank lo, Rank mi, Rank hi){//各自有序的子向量[lo,mi)和[mi,hi)
-    T * A = _elem + lo; //合并后的向量A[0,ho-lo) = _elem[lo, hi)
-    Rank lb = mi - lo;
-    T * B = new T[lb]; //前子向量B[0,lb) = _elem[lo,mi)
-    for (Rank i = 0; i < lb;i++)// 复制前子向量
-    {B[i] = A[i];}
-    Rank lc = hi - mi;
-    T * C = _elem + mi; //后子向量C[0,lc) = _elem[mi,hi)
-    for (Rank i = 0, j = 0, k = 0;(j < lb) || (k < lc);)
-    { //B[j]和C[k]中的小者续至A末尾
-        if ((j < lb) && (!(k < lc) || (B[j] <= C[k])))
-            A[i++] = B[j++];
-        if ((k < lc) && (!(j < lb) || (B[j] > C[k])))
-            A[i++] = C[k++];
-    }
-    delete [] B;
-}
+// template <typename T>   //有序向量的归并
+// void Vector<T>::merge_slow(Rank lo, Rank mi, Rank hi){//各自有序的子向量[lo,mi)和[mi,hi)
+//     T * A = _elem + lo; //合并后的向量A[0,ho-lo) = _elem[lo, hi)
+//     Rank lb = mi - lo;
+//     T * B = new T[lb]; //前子向量B[0,lb) = _elem[lo,mi)
+//     for (Rank i = 0; i < lb;i++)// 复制前子向量
+//     {B[i] = A[i];}
+//     Rank lc = hi - mi;
+//     T * C = _elem + mi; //后子向量C[0,lc) = _elem[mi,hi)
+//     for (Rank i = 0, j = 0, k = 0;(j < lb) || (k < lc);)
+//     { //B[j]和C[k]中的小者续至A末尾
+//         if ((j < lb) && (!(k < lc) || (B[j] <= C[k])))
+//             A[i++] = B[j++];
+//         if ((k < lc) && (!(j < lb) || (B[j] > C[k])))
+//             A[i++] = C[k++];
+//     }
+//     delete [] B;
+// }
 
-template <typename T> // 向量归并排序
-void Vector<T>::mergesort(Rank lo, Rank hi)
-{ // 0 <= lo <= hi <= _size
-    if (hi - lo < 2) // 单元素区间自然有序，否则..
-        return;
-    Rank mi = (lo + hi) >> 1; // 以中点为界
-    mergesort(lo,mi);
-    mergesort(mi,hi); // 分别排序
-    merge_slow(lo, mi, hi); // 归并
-}
+// template <typename T> // 向量归并排序
+// void Vector<T>::mergesort(Rank lo, Rank hi)
+// { // 0 <= lo <= hi <= _size
+//     if (hi - lo < 2) // 单元素区间自然有序，否则..
+//         return;
+//     Rank mi = (lo + hi) >> 1; // 以中点为界
+//     mergesort(lo,mi);
+//     mergesort(mi,hi); // 分别排序
+//     merge_slow(lo, mi, hi); // 归并
+// }
