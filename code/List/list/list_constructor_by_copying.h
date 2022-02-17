@@ -1,4 +1,3 @@
-#include "list.h"
 template <typename T>//复制列表中自位置p起始的n项(assert:p为合法位置，且至少有n-1个后继结点)
 List<T>::List(Posi(T) p, int n) { copyNodes(p, n); }
 
