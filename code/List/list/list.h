@@ -25,7 +25,7 @@ public:
     T& operator[](Rank r)const;//重载，支持寻秩访问(效率低)
     Posi(T) first() const { return header->succ; }//首节点位置
     Posi(T) last() const { return trailer->pred; }//末节点位置
-    bool valid(Posi(T) p);//判断p对外是否合法
+    bool valid(Posi(T) p)//判断p对外是否合法
     { return p && (p != header) && (p != trailer); }//将头尾节点等同于NULL
     int disoredred() const;//判断列表是否排序
     Posi(T) find(T const & e) const//无序列表查找
