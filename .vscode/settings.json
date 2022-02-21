@@ -18,6 +18,7 @@
         "random": "cpp",
         "limits": "cpp",
         "iostream": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "list": "cpp"
     }
 }
